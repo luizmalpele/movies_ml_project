@@ -1,0 +1,48 @@
+index,User
+title                              ,User Vector
+year                                   ,2020
+age                                       ,all
+imdb                                        ,80
+rotten_tomatoes                             ,80
+netflix                                   ,None
+hulu                                      ,None
+prime_video                               ,None
+disney                                    ,None
+directors        ,[Elizabeth Allen Rosenbaum]
+genres                    ,[Drama]
+country                    ,[United States]
+language                          ,[English]
+runtime                                    ,120
+Action                                       ,0
+Adventure                                    ,0
+Animation                                    ,0
+Biography                                    ,0
+Comedy                                       ,0
+Crime                                        ,0
+Documentary                                  ,0
+Drama                                        ,0
+Family                                       ,0
+Fantasy                                      ,0
+Film-Noir                                    ,0
+Game-Show                                    ,0
+History                                      ,0
+Horror                                       ,0
+Music                                        ,0
+Musical                                      ,0
+Mystery                                      ,0
+News                                         ,0
+Other                                        ,0
+Reality-TV                                   ,0
+Romance                                      ,0
+Sci-Fi                                       ,0
+Short                                        ,0
+Sport                                        ,0
+Talk-Show                                    ,0
+Thriller                                     ,0
+War                                          ,0
+Western                                      ,0
+13+                                          ,0
+16+                                          ,0
+18+,0
+7+                                           ,0
+all                                          ,1
