@@ -13,7 +13,7 @@ understand the statistics behind the film industry. Lastly, the application allo
 more entertainment options and save time searching through massive film directories. 
 
 ## Data Dictionary
-|Syntax|DataFrame|Description|Data Type|Example|
+|Variable|DataFrame|Description|Data Type|Example|
 |:---|:---:|:----|:---:|:---:|
 |title|movies_data|Movies' title|string|The Irishman|
 |year|movies_data|Movies' lauch year|int64|2019|
