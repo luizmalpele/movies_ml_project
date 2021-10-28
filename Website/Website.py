@@ -8,14 +8,37 @@ app = hy.HydraApp(title='Simple Multi-Page App')
 def Home():
  hy.info('Your are at home')
 
+# Movie Wazar page.
 @app.addapp(title='🧙🏼Movie Wizard')
-def MovieWizard():
- hy.info('In order to recommend you movies, please answer the following questions:')
- st.multiselect('Select one or more platforms:', ['Disney+', 'Hulu', 'Netflix','Prime']);
- st.select_slider('Pick a size', ['S', 'M', 'L'])
- st.checkbox(('I agree'),('testing'));
- st.radio('Pick one', ['cats', 'dogs']);
+def MovieWizard(): 
 
+ hy.info('In order to recommend you movies, please answer the following questions:')
+ st.title('Select platforms:')
+
+
+ st.multiselect('', ['Disney+', 'Hulu', 'Netflix','Prime']); # Platforms selection.
+ #st.select_slider('Pick a size', ['S', 'M', 'L'])
+ 
+ st.title("Select Region: ") # Region Selection
+ checkEurope = st.checkbox('Europe')
+ checkNAmerica = st.checkbox('North America')
+ checkSAmerica = st.checkbox('South America')
+ checkMiddleEast = st.checkbox('Middle East')
+ checkAsia = st.checkbox('Asia')
+ checkSAsia = st.checkbox('South Asia')
+
+ st.title("Do you care about movie's scores?") # Movie's score
+ st.radio('Pick one', ['Yes', 'No']);
+
+
+ st.title("Select age rating: ") # Age rating
+ r7 = st.checkbox('+7')
+ r13 = st.checkbox('+13')
+ r16 = st.checkbox('+16')
+ all = st.checkbox('All')
+
+
+ st.title("Select favorite genres: ") # Select of genres
 
 @app.addapp()
 def Explore():
