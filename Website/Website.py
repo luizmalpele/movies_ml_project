@@ -10,14 +10,14 @@ def Home():
 
 # Movie Wazar page.
 @app.addapp(title='🧙🏼Movie Wizard')
-def MovieWizard(): 
-
+def MovieWizard():
+ st.form('movie_wizard')
  hy.info('In order to recommend you movies, please answer the following questions:')
  st.title('Select platforms:')
 
 
  st.multiselect('', ['Disney+', 'Hulu', 'Netflix','Prime']); # Platforms selection.
- #st.select_slider('Pick a size', ['S', 'M', 'L'])
+ 
  
  st.title("Select Region: ") # Region Selection
  checkEurope = st.checkbox('Europe')
@@ -35,8 +35,21 @@ def MovieWizard():
  r7 = st.checkbox('+7')
  r13 = st.checkbox('+13')
  r16 = st.checkbox('+16')
- all = st.checkbox('All')
+ r18 = st.checkbox('+18')
+ all = st.checkbox('PG')
 
+ 
+ st.title("Select genre: ")
+ genres = st.multiselect('', ['Action','Adventure','Animation', 'Biography',
+ 'Comedy', 'Crime', 'Documentary', 'Drama', 'Family', 'Fantasy', 'Film-Noir','Game-Show',
+ 'History', 'Horror', 'Music', 'Musical', 'Mystery', 'News', 'Reality-TV','Romance','Sci-Fi',
+ 'Short','Sport','Talk-Show','Thriller','War','Western','Other Genres'])
+ 
+ if genres <3:
+    st.write('You have to select minimum 3 variables.')
+
+ elif genres >3:
+    st.write('You can select maximum 3 variables.')
 
  st.title("Select favorite genres: ") # Select of genres
 
