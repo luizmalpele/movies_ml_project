@@ -2,9 +2,7 @@
 import hydralit as hy
 import streamlit as st
 
-%run -i ../libraries/Preprocessing_Library.ipynb
-%run -i ../libraries/Functionalities_Library.ipynb
-%run -i ../libraries/Visualization_Library.ipynb
+from library import *
 
 app = hy.HydraApp(title='Simple Multi-Page App')
 
@@ -65,6 +63,8 @@ def Explore():
 def Statistics():
     hy.info('Lets see some visualizations')
 
+    #fig_platform = plot_platforms_distribution(movies_data = movies_data)
+    #fig_platform.show()
 
 @app.addapp()
 def Disney():
