@@ -12,11 +12,15 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
+# Machine Learning
+from sklearn.preprocessing import StandardScaler
+from sklearn.manifold import TSNE
+from sklearn.cluster import KMeans
+
 # Paths
 movies_data_path = '../data/movies_streaming_platforms.csv'
-movies_cleaned_data_path = '../data/movies_streaming_platforms_cleaned.csv'
-user_vector_path = '../data/user_vector_baseline.csv'
-
+movies_cleaned_data_path = 'C:/Users/luizg/Desktop/Poly/movies_ml_project/website/data/movies_streaming_platforms_cleaned.csv'
+user_vector_path = 'C:/Users/luizg/Desktop/Poly/movies_ml_project/website/data/user_vector_baseline_t.csv'
 ## =======================================
 ## Preprocessing helper functions
 ## =======================================
@@ -483,32 +487,68 @@ def plot_age_distribution(movies_data:pd.DataFrame):
 ## Machine Learning helper functions
 ## =======================================
 
+def update_user_vector(df:pd.DataFrame, genres_display:list, age_display:str):
+    '''
+    Updates user vector values based on the quiz responses 
+    '''
+    pd.options.mode.chained_assignment = None
+    if age_display == 'PG':
+        age_display = 'all'
+
+    df['genres']['User'] = genres_display
+    df['age']['User'] = age_display
+    df[age_display]['User'] = 1
+    
+    for genre in genres_display:
+        df[genre]['User'] = 1
+    
+    return df
+
+def read_append_user_vector(user_vector_path:str, df:pd.DataFrame):
+    '''
+    Reads User Vector and Appends to movies_data
+    '''
+    user_vector = pd.read_csv(user_vector_path, index_col = 'index')
+    df = df.drop(columns=['hulu', 'disney', 'netflix', 'prime_video', 'country', 
+                          'runtime', 'language', 'directors'])
+
+    df = pd.concat([df, user_vector], join = 'inner')
+    df.index = df.index.map(str)
+    
+    return df
+
 def get_features_column_list(df:pd.DataFrame):
-    #Select the features on the basis of ehich you want to cluster
-    remove_list = ['hulu', 'disney', 'netflix', 'prime_video', 'title', 'country', 
-                   'genres', 'runtime', 'age', 'directors', 'language', 
-                   '7+','13+','16+','18+','all']
+    '''
+    Get features from dataframe which will be used to create dummies
+    '''
+    #Select the features on the basis of which you want to cluster
+    remove_list = ['hulu', 'disney', 'netflix', 'prime_video', 'country', 
+                   'runtime', 'directors', 'language', 
+                   '7+','13+','16+','18+','all', 'title', 'age', 'genres']
     
     #Passes all DataFrame's columns to a list
     column_list = df.columns.to_list()
     
     #Remove columns from remove list
     for remove_element in remove_list:
-        column_list.remove(remove_element)
+        if remove_element in column_list:
+            column_list.remove(remove_element)
         
     #Returns column list which will serve as features
     return column_list
 
-def get_integer_features(df:pd.DataFrame):
-    #Select the features on the basis of ehich you want to cluster
+def get_features(df:pd.DataFrame):
+    '''
+    Get Features to t-SNE
+    '''
     column_list = get_features_column_list(df = df)
     features = df[column_list].astype(int)
-    features_user = user_vector[column_list].astype(int)
-    features = features.append(features_user)
-    df = df.append(user_vector)
-    return df, features
+    return features
 
-def generate_tsne_transfomation(features:pd.DataFrame):
+def generate_tsne_transfomation(features:pd.DataFrame, df:pd.DataFrame):
+    '''
+    Applies t-SNE, maps the N-dimensional data to 2D, and returns a t-sne dataframe
+    '''
     #Scaling the data
     scaler = StandardScaler()
     scaled_data = scaler.fit_transform(features)
@@ -521,11 +561,11 @@ def generate_tsne_transfomation(features:pd.DataFrame):
     cluster = KMeans(n_clusters=23)
     group_pred = cluster.fit_predict(scaled_data)
 
-    #Consider adding the genre
-    tsne_df = pd.DataFrame(np.column_stack((transformed_genre, group_pred, movies_data['title'], 
-                                            movies_data['genres'], movies_data['age'])),
-                                            columns=['X','Y','Group','Title', 'Genres', 'Age'])
     
+    #Consider adding the genre
+    tsne_df = pd.DataFrame(np.column_stack((transformed_genre, group_pred, df['title'], df['genres'], df['age'])),
+                                            columns=['X','Y','Group','Title','Genres','Age'])
+
     return tsne_df
 
 def get_recommendations(df:pd.DataFrame, refresher_counter:int = 0):
@@ -543,9 +583,9 @@ def get_recommendations(df:pd.DataFrame, refresher_counter:int = 0):
         recommendations_df = df[1+10*refresher_counter:11+10*refresher_counter]
     return recommendations_df
 
-def genrate_tsne_visualization(df:pd.DataFrame):
-    tsne_user_x = tsne_df[tsne_df['Title'] == 'User Vector']['X']
-    tsne_user_y = tsne_df[tsne_df['Title'] == 'User Vector']['Y']
+def generate_tsne_visualization(df:pd.DataFrame):
+    tsne_user_x = df[df['Title'] == 'User Vector']['X']
+    tsne_user_y = df[df['Title'] == 'User Vector']['Y']
 
     # Build figure
     fig = go.Figure()
@@ -554,11 +594,11 @@ def genrate_tsne_visualization(df:pd.DataFrame):
     fig.add_trace(
         go.Scatter(
             mode = 'markers',
-            x = tsne_df['X'],
-            y = tsne_df['Y'],
-            customdata = tsne_df,
+            x = df['X'],
+            y = df['Y'],
+            customdata = df,
             marker = dict(
-                color = tsne_df['Group'],
+                color = df['Group'],
                 colorscale='Viridis'
             ),
             hovertemplate =
@@ -584,7 +624,7 @@ def genrate_tsne_visualization(df:pd.DataFrame):
     #Standard Figure Layout for Data Visualization
     fig.update_layout(
         dict(
-            height=600, 
+            height=700, 
             width=1000,
             plot_bgcolor = "#F1F1F3",
             paper_bgcolor = 'white',
@@ -601,14 +641,26 @@ def genrate_tsne_visualization(df:pd.DataFrame):
 ## Functionalities helper functions
 ## =======================================
 
-def filter_by_platforms(df:pd.DataFrame, hulu_display:bool = None, netflix_display:bool = None, 
-                        prime_video_display:bool = None, disney_display:bool = None, display_all:bool = None):
+def filter_by_platforms(df:pd.DataFrame, platforms_list:list,hulu_display:bool = None, netflix_display:bool = None, 
+                        prime_video_display:bool = None, disney_display:bool = None):
     '''
     Filtering platform functio - Takes user input to which platform to filter or displays everything
     '''
     
-    #Display All Platforms Condition
-    if display_all == True:
+    for platform in platforms_list:
+        if platform == 'Hulu':
+            hulu_display = True
+        elif platform == 'Prime':
+            prime_video_display = True
+        elif platform == 'Disney+':
+            disney_display = True
+        elif platform == 'Netflix':
+            netflix_display = True
+        elif not platforms_list:
+            display_all = True
+    
+    #Display All Platforms if list is empty
+    if not platforms_list:
         hulu_display = True 
         netflix_display = True 
         prime_video_display = True
