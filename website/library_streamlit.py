@@ -526,7 +526,7 @@ def get_features_column_list(df:pd.DataFrame):
                    'runtime', 'directors', 'language', 
                    '7+','13+','16+','18+','all', 'title', 'age', 'genres']
     
-    #Passes all DataFrame's columns to a list
+    #Passes all DataFrames columns to a list
     column_list = df.columns.to_list()
     
     #Remove columns from remove list
@@ -575,7 +575,9 @@ def get_recommendations(df:pd.DataFrame, refresher_counter:int = 0):
     '''
     tsne_user_x = float(df[df['Title'] == 'User Vector']['X'])
     tsne_user_y = float(df[df['Title'] == 'User Vector']['Y'])
-    df['UserDistance'] = ((df['X'] - tsne_user_x)**2 + (df['Y'] - tsne_user_y)**2)**0.5
+    # df['UserDistance'] = np.sqrt(np.square(df['X'] - tsne_user_x) + np.square(df['Y'] - tsne_user_y))
+    df['UserDistance'] = ((df['X'] - tsne_user_x)**2 + (df['Y'] - tsne_user_y)**2)**.5
+
     df = df.sort_values(by=['UserDistance'])
     if refresher_counter == 0:
         recommendations_df = df[1:11]
@@ -688,3 +690,12 @@ def filter_by_age(df:pd.DataFrame, display_7:bool = None, display_13:bool = None
             (df['all'] == display_pg)]
     
     return df
+
+def get_posters(dataset, rec):
+    titles = rec["Title"].to_numpy()
+    matches = []
+    for id, title in dataset[["id", "title"]].to_numpy():
+        if title in titles:
+            print("match")
+            matches.append([id, title])
+    return matches
