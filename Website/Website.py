@@ -35,9 +35,9 @@ movies_data = read_cleaned_movies_dataframe(path=movies_cleaned_data_path)
 app = hy.HydraApp(title='Simple Multi-Page App')
 
 
-@app.addapp(title='🏠')
-def Home():
-    hy.info('Your are at home')
+#@app.addapp(title='🏠')
+#def Home():
+#    hy.info('Your are at home')
 
 
 # Movie Wazar page.
@@ -54,7 +54,7 @@ def MovieWizard():
         #st.title('Select Region: ')  # Region Selection
         #arg_region = st.multiselect('Select your region preferences', ['Europe', 'North America', 'LATAM', 'Asia', 'Other'], key=1)
 
-        st.title("Do you care about movie's scores?")  # Movie's score
+        st.title("Do you care about movie's critics scores?")  # Movie's score
         st.radio('Pick one', ['Yes, of course(...)', 'Only to avoid bad movies', 'Not All!'])
         st.title("Select age rating: ")  # Age rating
         arg_age_display = st.radio('Select your age preferences', ['PG', '7+', '13+', '16+', '18+'])
@@ -101,7 +101,7 @@ def MovieWizard():
 
 
 
-@app.addapp()
+@app.addapp(title = '🔍 Explore')
 def Explore():
     st.markdown("<h1 style='text-align: center; color: black;'>Explore Statistics behind your Favourite Films</h1>",
                 unsafe_allow_html=True)
@@ -110,7 +110,7 @@ def Explore():
     AgGrid(movies_data)
 
 
-@app.addapp()
+@app.addapp(title = '📊 Statistics')
 def Statistics():
     st.markdown(
         "<h1 style='text-align: center; color: black;'>Explore Statistics behind the Streaming Platform and Film Industry</h1>",
@@ -143,7 +143,7 @@ def Statistics():
         st.plotly_chart(fig_column_list, use_container_width=True)
 
 
-@app.addapp()
+@app.addapp(title = '🧚 Disney+')
 def Disney():
     st.markdown("<h1 style='text-align: center; color: black;'>Disney+ Platform Exploration</h1>",
                 unsafe_allow_html=True)
@@ -175,7 +175,7 @@ def Disney():
         st.plotly_chart(fig_column_list, use_container_width=True)
 
 
-@app.addapp()
+@app.addapp(title = '📺 Hulu')
 def Hulu():
     st.markdown("<h1 style='text-align: center; color: black;'>Hulu Platform Exploration</h1>", unsafe_allow_html=True)
     movies_data_filtered = filter_by_platforms(df=movies_data, platforms_list=['Hulu'])
@@ -205,7 +205,7 @@ def Hulu():
         st.plotly_chart(fig_column_list, use_container_width=True)
 
 
-@app.addapp()
+@app.addapp(title = '🎬 Netflix')
 def Netflix():
     st.markdown("<h1 style='text-align: center; color: black;'>Netflix Platform Exploration</h1>",
                 unsafe_allow_html=True)
@@ -237,7 +237,7 @@ def Netflix():
         st.plotly_chart(fig_column_list, use_container_width=True)
 
 
-@app.addapp()
+@app.addapp(title = '📹 Prime Video')
 def Prime():
     st.markdown("<h1 style='text-align: center; color: black;'>Amazon Prime Video Platform Exploration</h1>",
                 unsafe_allow_html=True)
