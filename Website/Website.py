@@ -28,7 +28,7 @@ st.markdown('<style>.reportview-container .main .block-container {max-width: 80%
 # movies_data_path = './data/movies_streaming_platforms.csv'
 movies_cleaned_data_path = 'data/movies_streaming_platforms_cleaned.csv'
 user_vector_path = 'data/user_vector_baseline_t.csv'
-movie_posters = pd.read_csv("../data/Movie_posterURL.csv")
+movie_posters = pd.read_csv("../data/available_poster_imgs.csv")
 
 movies_data = read_cleaned_movies_dataframe(path=movies_cleaned_data_path)
 

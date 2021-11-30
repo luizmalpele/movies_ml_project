@@ -696,6 +696,6 @@ def get_posters(dataset, rec):
     matches = []
     for id, title in dataset[["id", "title"]].to_numpy():
         if title in titles:
-            print("match")
             matches.append([id, title])
+    print(matches[:, 1])
     return matches
