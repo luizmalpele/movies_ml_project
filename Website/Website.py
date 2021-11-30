@@ -78,7 +78,7 @@ def MovieWizard():
         movies_data_merged_genres_age = get_column_dummies_from_list(movies_data_merged_genres, column_name='age',
                                                                      merge_dummies=True)
         movies_data_user_vector = read_append_user_vector(user_vector_path, df=movies_data_merged_genres_age)
-        # movies_data_user_vector_updated = update_user_vector(df = movies_data_user_vector, genres_display = arg_genres_display, age_display = arg_age_display)
+        update_user_vector(df = movies_data_user_vector, genres_display = arg_genres_display, age_display = arg_age_display)
         features = get_features(movies_data_user_vector)
         tsne_df = generate_tsne_transfomation(features=features, df=movies_data_user_vector)
         st.markdown("<h2 style='text-align: center; color: black;'>Top 10 Movie Recommendations</h2>",
