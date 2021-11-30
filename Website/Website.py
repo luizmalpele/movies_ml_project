@@ -47,21 +47,20 @@ def MovieWizard():
 
     with st.form(key='quiz_form'):
         st.markdown('#### In order to recommend you movies, please answer the following questions:')
-        st.title('Select platforms:')
         hy.info('Blank response will select all automatically')
-        arg_platform_display = st.multiselect('', ['Disney+', 'Hulu', 'Netflix', 'Prime']);  # Platforms selection.
+        st.title('Select platforms:')
+        arg_platform_display = st.multiselect('Select one or multiple platforms', ['Disney+', 'Hulu', 'Netflix', 'Prime']);  # Platforms selection.
 
-        st.title('Select Region: ')  # Region Selection
-        arg_region = st.multiselect('Select Region Preferences', ['Europe', 'North America', 'LATAM', 'Asia', 'Other'],
-                                    key=1)
+        #st.title('Select Region: ')  # Region Selection
+        #arg_region = st.multiselect('Select your region preferences', ['Europe', 'North America', 'LATAM', 'Asia', 'Other'], key=1)
 
         st.title("Do you care about movie's scores?")  # Movie's score
         st.radio('Pick one', ['Yes, of course(...)', 'Only to avoid bad movies', 'Not All!'])
         st.title("Select age rating: ")  # Age rating
-        arg_age_display = st.radio('Select Region Preferences', ['PG', '7+', '13+', '16+', '18+'])
+        arg_age_display = st.radio('Select your age preferences', ['PG', '7+', '13+', '16+', '18+'])
 
         st.title("Select genre: ")  # Select genre
-        arg_genres_display = st.multiselect('', ['Action', 'Adventure', 'Animation', 'Biography',
+        arg_genres_display = st.multiselect('Select one or more genres', ['Action', 'Adventure', 'Animation', 'Biography',
                                                  'Comedy', 'Crime', 'Documentary', 'Drama', 'Family', 'Fantasy',
                                                  'Film-Noir', 'Game-Show',
                                                  'History', 'Horror', 'Music', 'Musical', 'Mystery', 'News',
@@ -113,7 +112,6 @@ def Explore():
 
 @app.addapp()
 def Statistics():
-    hy.info('Lets see some visualizations')
     st.markdown(
         "<h1 style='text-align: center; color: black;'>Explore Statistics behind the Streaming Platform and Film Industry</h1>",
         unsafe_allow_html=True)
@@ -149,7 +147,6 @@ def Statistics():
 def Disney():
     st.markdown("<h1 style='text-align: center; color: black;'>Disney+ Platform Exploration</h1>",
                 unsafe_allow_html=True)
-    hy.info('Movies from Disney+')
     movies_data_filtered = filter_by_platforms(df=movies_data, platforms_list=['Disney+'])
     st.markdown("<h2 style='text-align: center; color: black;'>Critics\'s scores for Disney+</h2>",
                 unsafe_allow_html=True)
@@ -180,9 +177,7 @@ def Disney():
 
 @app.addapp()
 def Hulu():
-    hy.info('Movies from Hulu')
     st.markdown("<h1 style='text-align: center; color: black;'>Hulu Platform Exploration</h1>", unsafe_allow_html=True)
-    hy.info('Movies from Disney+')
     movies_data_filtered = filter_by_platforms(df=movies_data, platforms_list=['Hulu'])
     st.markdown("<h2 style='text-align: center; color: black;'>Critics\'s scores for Hulu</h2>", unsafe_allow_html=True)
     fig_scores = plot_scores_distribution(movies_data=movies_data)
@@ -214,7 +209,6 @@ def Hulu():
 def Netflix():
     st.markdown("<h1 style='text-align: center; color: black;'>Netflix Platform Exploration</h1>",
                 unsafe_allow_html=True)
-    hy.info('Movies from Netflix')
     movies_data_filtered = filter_by_platforms(df=movies_data, platforms_list=['Netflix'])
     st.markdown("<h2 style='text-align: center; color: black;'>Critics\'s scores for Netflix</h2>",
                 unsafe_allow_html=True)
@@ -247,7 +241,6 @@ def Netflix():
 def Prime():
     st.markdown("<h1 style='text-align: center; color: black;'>Amazon Prime Video Platform Exploration</h1>",
                 unsafe_allow_html=True)
-    hy.info('Movies from Amazon Prime Video')
     movies_data_filtered = filter_by_platforms(df=movies_data, platforms_list=['Prime'])
     st.markdown("<h2 style='text-align: center; color: black;'>Critics\'s scores for Amazon Prime Video</h2>",
                 unsafe_allow_html=True)
