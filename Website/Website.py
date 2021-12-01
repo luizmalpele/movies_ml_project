@@ -150,7 +150,7 @@ def Disney():
     movies_data_filtered = filter_by_platforms(df=movies_data, platforms_list=['Disney+'])
     st.markdown("<h2 style='text-align: center; color: black;'>Critics\'s scores for Disney+</h2>",
                 unsafe_allow_html=True)
-    fig_scores = plot_scores_distribution(movies_data=movies_data)
+    fig_scores = plot_scores_distribution(movies_data = movies_data_filtered)
     st.plotly_chart(fig_scores, use_container_width=True)
     st.markdown("<h2 style='text-align: center; color: black;'>Film\'s Information Exploration</h2>",
                 unsafe_allow_html=True)
@@ -178,9 +178,9 @@ def Disney():
 @app.addapp(title = '📺 Hulu')
 def Hulu():
     st.markdown("<h1 style='text-align: center; color: black;'>Hulu Platform Exploration</h1>", unsafe_allow_html=True)
-    movies_data_filtered = filter_by_platforms(df=movies_data, platforms_list=['Hulu'])
+    movies_data_filtered = filter_by_platforms(df = movies_data, platforms_list=['Hulu'])
     st.markdown("<h2 style='text-align: center; color: black;'>Critics\'s scores for Hulu</h2>", unsafe_allow_html=True)
-    fig_scores = plot_scores_distribution(movies_data=movies_data)
+    fig_scores = plot_scores_distribution(movies_data = movies_data_filtered)
     st.plotly_chart(fig_scores, use_container_width=True)
     st.markdown("<h2 style='text-align: center; color: black;'>Film\'s Information Exploration</h2>",
                 unsafe_allow_html=True)
@@ -200,8 +200,8 @@ def Hulu():
 
         submit_button = st.form_submit_button()  # Submit form button
 
-        fig_column_list = plot_column_list(movies_data_filtered, column_name=arg_column_list,
-                                           top=arg_slider_column_list)
+        fig_column_list = plot_column_list(movies_data_filtered, column_name = arg_column_list,
+                                           top = arg_slider_column_list)
         st.plotly_chart(fig_column_list, use_container_width=True)
 
 
@@ -209,10 +209,10 @@ def Hulu():
 def Netflix():
     st.markdown("<h1 style='text-align: center; color: black;'>Netflix Platform Exploration</h1>",
                 unsafe_allow_html=True)
-    movies_data_filtered = filter_by_platforms(df=movies_data, platforms_list=['Netflix'])
+    movies_data_filtered = filter_by_platforms(df = movies_data, platforms_list=['Netflix'])
     st.markdown("<h2 style='text-align: center; color: black;'>Critics\'s scores for Netflix</h2>",
                 unsafe_allow_html=True)
-    fig_scores = plot_scores_distribution(movies_data=movies_data)
+    fig_scores = plot_scores_distribution(movies_data=movies_data_filtered)
     st.plotly_chart(fig_scores, use_container_width=True)
     st.markdown("<h2 style='text-align: center; color: black;'>Film\'s Information Exploration</h2>",
                 unsafe_allow_html=True)
@@ -244,7 +244,7 @@ def Prime():
     movies_data_filtered = filter_by_platforms(df=movies_data, platforms_list=['Prime'])
     st.markdown("<h2 style='text-align: center; color: black;'>Critics\'s scores for Amazon Prime Video</h2>",
                 unsafe_allow_html=True)
-    fig_scores = plot_scores_distribution(movies_data=movies_data)
+    fig_scores = plot_scores_distribution(movies_data=movies_data_filtered)
     st.plotly_chart(fig_scores, use_container_width=True)
     st.markdown("<h2 style='text-align: center; color: black;'>Film\'s Information Exploration</h2>",
                 unsafe_allow_html=True)
