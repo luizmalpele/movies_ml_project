@@ -31,3 +31,13 @@ more entertainment options and save time searching through massive film director
 |group|tsne_df|Movie's cluster number|object(int)|18|
 |X|tsne_df|The X-value on the t-distributed stochastic neighbor embedding|object(float64)|-64.7094|
 |Y|tsne_df|The Y-value on the t-distributed stochastic neighbor embedding|object(float64)|43.7906|
+
+## Folders
+
+__assets:__ Contains Images that are used within the Notebooks
+__code:__ Contains three notebooks which are Movies_Streaming_Analysis used for testing preprocessing functions,
+Movies_Streaming_Visualization to test data visualization functions, and Movies_Streaming_Machine_Learning to test ML functions.
+Furthermore, it also includes 2 .py files which are resposible to do web scrapping and retrieve movies' thumbnails from Rotten Tomatoes and IMDB.
+__data:__ contains all .csv files that are used for caching and modeling
+__results:__ is an empty folder, but aims to store png and overall modelling results for future referencing
+__website:__ contains the execution .py file to run the WebApplication for Movie Wizard (Check User Manual for more information)
